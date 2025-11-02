@@ -1,0 +1,30 @@
+*{
+   margin:0%;
+   padding:0%;
+   box-sizing: border-box;
+}
+
+html,body{
+   height:100%;
+   width:100%;
+}
+
+.hero{
+   text-align: center;
+}
+
+.heroImage{
+   display: block;   
+   margin: auto;
+   width: 75%
+}
+.paraText{
+   /* font-size: 1.6rem; */
+   margin: 20px 0px;
+}
+
+.btns{
+   width: 20%;
+   margin: 0 auto;
+   /* font-size: 1.5rem; */
+}

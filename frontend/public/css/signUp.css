@@ -1,0 +1,77 @@
+.signupText {
+  color: #767676;
+}
+
+/* navabra */
+.container-fluid {
+  height: 50%;
+  margin-left: 13rem;
+}
+
+/* footer */
+
+.footer {
+  background-color: #76767632;
+}
+
+ul {
+  color: #767676;
+  list-style-type: none;
+  margin-left: -35px;
+}
+
+ul li {
+  margin-left: 0;
+  margin-bottom: 1rem;
+}
+
+.para {
+  font-size: small;
+}
+
+p {
+  color: #767676;
+}
+
+.flexLink {
+  font-size: small;
+}
+
+/* sign up form  */
+.phone-input {
+  max-width: 350px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 5px 10px;
+  background-color: #fff;
+}
+
+ .phone-input img {
+  width: 25px;
+  height: auto;
+  margin-right: 8px;
+}
+.country-code {
+  margin-right: 8px;
+  font-weight: 500;
+}
+.phone-input input {
+  border: none;
+  outline: none;
+  flex: 1;
+}
+
+.btns:hover{
+  background-color: black;
+}
+
+.explore{
+  width: 20%;
+  height: 50%;
+}
+
+.explore:hover{
+  background-color: black;
+}

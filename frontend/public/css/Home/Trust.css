@@ -1,0 +1,37 @@
+.text p {
+  font-size: 1.1rem;
+  color: #767676;
+}
+
+.textPricing a{
+  font-size: 1.1rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover{
+    color: black;
+}
+
+.trustLink a{
+  font-size: 1.1rem;
+}
+
+.trustLinkArrow{
+  font-size: 1.1rem;
+}
+
+.trsutImage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.pricingClass p{
+  font-size: x-small;
+  color: #767676;
+
+}

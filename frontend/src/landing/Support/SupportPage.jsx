@@ -1,18 +1,16 @@
-import React from 'react'
-import VariousLink from './VariousLink'
-import SupportNav from './SupportNav'
-import Navbar from '../Navbar'
-import Footer from '../Footer'
+import React from "react";
 
-function SupportPage() {
+import Hero from "./Hero";
+import CreateTicket from "./CreateTicket";
+
+
+function PricingPage() {
   return (
     <>
-        <Navbar/>
-        <SupportNav/>
-        <VariousLink/>
-        <Footer/>
+      <Hero />
+      <CreateTicket />
     </>
-  )
+  );
 }
 
-export default SupportPage
+export default PricingPage;
