@@ -13,6 +13,7 @@ const bodyParser = require("body-parser");
 
 const { holdingModel } = require("./model/holdingModel");
 const { positionModel } = require("./model/positionModel");
+const { orderModel } = require("./model/orderModel");
 
 // this route is uesd to add holding and position data in our database..
 // app.get("/addalldata", async (req, res) => {
@@ -186,11 +187,28 @@ app.use(bodyParser.json());
 app.get("/allholding", async (req, res) => {
   let allHoldings = await holdingModel.find({});
   res.json(allHoldings);
-  console.log(allHoldings);
 });
+
 app.get("/allposition", async (req, res) => {
   let allpositions = await positionModel.find({});
   res.json(allpositions);
+});
+
+app.post("/neworder", async (req, res) => {
+  let newOrder = new orderModel({
+    name: req.body.name,
+    qty: req.body.qty,
+    price: req.body.price,
+    mode: req.body.mode,
+  });
+
+  await newOrder.save();
+});
+
+
+app.get("/allorders", async (req, res) => {
+  let allorders = await orderModel.find({});
+  res.json(allorders);
 });
 
 app.listen(PORT, () => {
