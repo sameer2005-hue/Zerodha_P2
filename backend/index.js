@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
+const cookie = require("cookie-parser");
 
 const PORT = process.env.PORT || 3000;
 const url = process.env.MONGO_URL;
@@ -9,11 +10,17 @@ const url = process.env.MONGO_URL;
 const app = express();
 
 const cors = require("cors");
-const bodyParser = require("body-parser");
 
 const { holdingModel } = require("./model/holdingModel");
 const { positionModel } = require("./model/positionModel");
 const { orderModel } = require("./model/orderModel");
+
+const authRoute = require("./routes/authRoute");
+
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(express.json());
+app.use(cookie());
+
 
 // this route is uesd to add holding and position data in our database..
 // app.get("/addalldata", async (req, res) => {
@@ -181,8 +188,10 @@ const { orderModel } = require("./model/orderModel");
 //   res.send("Done!")
 // });
 
-app.use(cors());
-app.use(bodyParser.json());
+
+// signup route
+
+app.use("/", authRoute);
 
 app.get("/allholding", async (req, res) => {
   let allHoldings = await holdingModel.find({});
@@ -204,7 +213,6 @@ app.post("/neworder", async (req, res) => {
 
   await newOrder.save();
 });
-
 
 app.get("/allorders", async (req, res) => {
   let allorders = await orderModel.find({});

@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Menu = () => {
   let [selectedMenu, setSelectedMenu] = useState(0);
   let [isProfileDropDownOpen, setIsProfileDropDownOpen] = useState(false);
+  let [username, setUsername] = useState("");
+
+  useEffect(() => {
+    // Get username from localStorage when component mounts
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
@@ -97,8 +106,10 @@ const Menu = () => {
         </ul>
         <hr />
         <div className="profile">
-          <div className="avatar">ZU</div>
-          <p className="username">USERID</p>
+          <div className="avatar">
+            {username ? username[0].toUpperCase() : "U"}
+          </div>
+          <p className="username">{username || "USERID"}</p>
         </div>
       </div>
     </div>
