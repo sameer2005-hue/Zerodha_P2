@@ -1,26 +1,86 @@
 require("dotenv").config();
-
 const express = require("express");
 const mongoose = require("mongoose");
-const cookie = require("cookie-parser");
-
-const PORT = process.env.PORT || 3000;
-const url = process.env.MONGO_URL;
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const userVerify = require("./middlewared/authMiddleware");
 
 const app = express();
-
-const cors = require("cors");
+const PORT = process.env.PORT || 3000;
+const url = process.env.MONGO_URL;
 
 const { holdingModel } = require("./model/holdingModel");
 const { positionModel } = require("./model/positionModel");
 const { orderModel } = require("./model/orderModel");
 
 const authRoute = require("./routes/authRoute");
+const userRoute = require("./routes/userRoute");
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://localhost:5174"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
-app.use(cookie());
+app.use(cookieParser());
 
+app.use("/", authRoute);
+app.use("/api", userRoute);
+
+app.get("/allholding", async (req, res) => {
+  const holdings = await holdingModel.find({});
+  res.json(holdings);
+});
+
+app.get("/allposition", async (req, res) => {
+  const positions = await positionModel.find({});
+  res.json(positions);
+});
+
+app.post("/neworder", userVerify.userVerification, async (req, res) => {
+  try {
+    const newOrder = new orderModel({
+      name: req.body.name,
+      qty: req.body.qty,
+      price: req.body.price,
+      mode: req.body.mode,
+      user: req.user._id,
+    });
+
+    await newOrder.save();
+
+    res.json({
+      success: true,
+      message: "Order added successfully",
+      newOrder, // 👈 return the created order
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+// ✅ Fetch all orders for the logged-in user
+app.get("/allorders", userVerify.userVerification, async (req, res) => {
+  try {
+    const orders = await orderModel.find({ user: req.user._id });
+    res.json(orders);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+mongoose
+  .connect(url)
+  .then(() => {
+    console.log("✅ MongoDB Connected");
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+  })
+  .catch((err) => console.error("❌ DB Connection Failed:", err));
 
 // this route is uesd to add holding and position data in our database..
 // app.get("/addalldata", async (req, res) => {
@@ -187,43 +247,3 @@ app.use(cookie());
 
 //   res.send("Done!")
 // });
-
-
-// signup route
-
-app.use("/", authRoute);
-
-app.get("/allholding", async (req, res) => {
-  let allHoldings = await holdingModel.find({});
-  res.json(allHoldings);
-});
-
-app.get("/allposition", async (req, res) => {
-  let allpositions = await positionModel.find({});
-  res.json(allpositions);
-});
-
-app.post("/neworder", async (req, res) => {
-  let newOrder = new orderModel({
-    name: req.body.name,
-    qty: req.body.qty,
-    price: req.body.price,
-    mode: req.body.mode,
-  });
-
-  await newOrder.save();
-});
-
-app.get("/allorders", async (req, res) => {
-  let allorders = await orderModel.find({});
-  res.json(allorders);
-});
-
-app.listen(PORT, () => {
-  mongoose
-    .connect(url)
-    .then(console.log("DB Connected"))
-    .catch((e) => {
-      console.log(e);
-    });
-});

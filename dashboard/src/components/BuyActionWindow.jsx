@@ -1,26 +1,37 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import GeneralContext from "./GeneralContext";
-
 import "./BuyActionWindow.css";
 
 const BuyActionWindow = ({ uid }) => {
   const { closeBuyWindow } = useContext(GeneralContext);
+  const navigate = useNavigate();
   const [stockQuantity, setStockQuantity] = useState(1);
   const [stockPrice, setStockPrice] = useState(0.0);
 
-  const handleBuyClick = () => {
-    axios.post("http://localhost:3000/newOrder", {
-      name: uid,
-      qty: stockQuantity,
-      price: stockPrice,
-      mode: "BUY",
-    });
+  const handleBuyClick = async () => {
+    try {
+      const res = await axios.post(
+        "http://localhost:3000/neworder",
+        {
+          name: uid,
+          qty: stockQuantity,
+          price: stockPrice,
+          mode: "BUY",
+        },
+        { withCredentials: true }
+      );
 
-    closeBuyWindow();
+      if (res.data.success) {
+        // ✅ navigate to Orders page and send new order data
+        navigate("/orders", { state: { newOrder: res.data.newOrder } });
+      }
+
+      closeBuyWindow();
+    } catch (err) {
+      console.error("Error placing order:", err);
+    }
   };
 
   const handleCancelClick = () => {

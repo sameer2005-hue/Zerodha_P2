@@ -16,7 +16,7 @@ function Hero() {
           bonds, and more.
         </p>
         <div>
-          <Link to="/signup">
+          <Link to="/signup" state={{formType: "signup"}}>
             <button
               className="btns btn btn-primary mt-3 me-2 p-2 fs-5 mb-5"
               onClick={() => setShowForm("signup")}
@@ -24,9 +24,9 @@ function Hero() {
               Sign up for free
             </button>
           </Link>
-          <Link to="/signup">
+          <Link to="/signup" state={{formType: "login"}}>
             <button
-              className="btns btn btn-primary mt-3 p-2 fs-5 mb-5"
+              className="btns btn btn-outline-primary mt-3 p-2 fs-5 mb-5"
               onClick={() => setShowForm("login")}
             >
               Log in
@@ -34,13 +34,6 @@ function Hero() {
           </Link>
         </div>
       </div>
-
-      {showForm && (
-        <HeroSignup
-          formType={showForm} // either "signup" or "login"
-          onBack={() => setShowForm(null)} // go back to hero section
-        />
-      )}
     </div>
   );
 }
