@@ -1,0 +1,107 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+      * {
+        margin: 0%;
+        padding: 0%;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        background-color: #c1e3f5;
+      }
+      .navImg {
+        width: 7rem;
+        height: 8rem;
+      }
+      .navbar {
+        background-color: #c1e3f5;
+      }
+      .centerText {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+      .center1 {
+        margin-left: 2rem;
+      }
+      .centerImg {
+        width: 100%;
+      }
+      .real{
+        color: #093A3E;
+        font: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img
+            class="navImg"
+            src="../static/img2.png"
+            alt="Logo"
+            width="30"
+            height="24"
+            class="d-inline-block align-text-top"
+          />
+          <span class="real fs-2">RealEstate</span>
+        </a>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col mt-5">
+          <h2 class="fs-1">House Price Prediction</h2>
+          <p>This platform is used to predict price of USA</p>
+          <form action="predict">
+            <button type="submit" class="btn btn-success">Get Started</button>
+          </form>
+        </div>
+        <div class="col">
+          <img
+            class="centerImg"
+            src="https://cdn.vivoldi.com/www/image/picture/tools/pic.tools.website-image-extractor.webp?v=202509301"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+    <!-- <div class="centerText">
+      <div class="center1">
+        <h2>HousePrice Prediction</h2>
+        <p>This platform is used to predict price of USA</p>
+        <form action="predict">
+          <button type="submit" class="btn btn-success">Success</button>
+        </form>
+      </div>
+      <div>
+        <img
+        class="centerImg"
+          src="https://cdn.vivoldi.com/www/image/picture/tools/pic.tools.website-image-extractor.webp?v=202509301"
+          alt=""
+        />
+      </div>
+    </div> -->
+    <!-- <h2>Welcome to</h2>
+    <h1>House Price Prediction System</h1>
+    <form action="predict">
+        <input type="submit" value="START">
+    </form> -->
+  </body>
+</html>
