@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 // import { holdings } from "../data/data";  // import holdings data
-
+import { VerticalGraph } from "./VerticalGraph";
 const Holdings = () => {
   let [allholdings, setAllHoldings] = useState([]);
 
   useEffect(() => {
     axios.get("http://localhost:3000/allholding").then((res) => {
       setAllHoldings(res.data);
-    })
+    });
   }, []);
-  
+
+  const labels = allholdings.map((subArray) => subArray["name"]);
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Stock Price",
+        data: allholdings.map((stock) => stock.price),
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+    ],
+  };
+
   return (
     <>
       <h3 className="title">Holdings({allholdings.length})</h3>
@@ -70,6 +82,7 @@ const Holdings = () => {
           <p>P&L</p>
         </div>
       </div>
+      <VerticalGraph data={data} />
     </>
   );
 };
